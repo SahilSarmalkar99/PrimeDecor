@@ -1,0 +1,47 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: "font1";
+  src: url("/src/assets/font/font1.woff2") format("woff2");
+}
+@font-face {
+  font-family: "font2";
+  src: url("/src/assets/font/font2.woff2") format("woff2");
+}
+@font-face {
+  font-family: "font3";
+  src: url("/src/assets/font/font3.woff2") format("woff2");
+}
+@font-face {
+  font-family: "font4";
+  src: url("/src/assets/font/font4.woff2") format("woff2");
+}
+@font-face {
+  font-family: "font5";
+  src: url("/src/assets/font/font5.woff2") format("woff2");
+}
+@font-face {
+  font-family: "font6";
+  src: url("/src/assets/font/font6.woff2") format("woff2");
+}
+
+@keyframes brandsInfiniteScroll {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(calc(-50% - 12px));
+  }
+}
+
+.brands-track {
+  width: max-content;
+  animation: brandsInfiniteScroll 28s linear infinite;
+  will-change: transform;
+}
+
+/* Optional: pause when user hovers */
+.brands-track:hover {
+  animation-play-state: paused;
+}
