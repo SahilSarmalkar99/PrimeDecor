@@ -9,6 +9,9 @@ import ProcessSection from '../components/home/ProcessSection'
 import ShowreelSection from '../components/home/ShowreelSection'
 import Testimonials from '../components/home/Testimonials'
 import BlogSection from '../components/home/BlogSection'
+import FAQSection from '../components/home/FAQSection'
+import NextChapter from '../components/home/NextChapter'
+import Footer from '../components/home/Footer'
 
 const Home = () => {
   return (
@@ -23,6 +26,9 @@ const Home = () => {
       <ShowreelSection />
       <Testimonials />
       <BlogSection />
+      <FAQSection />
+      <NextChapter />
+      <Footer />
     </div>
   )
 }

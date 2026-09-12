@@ -6,6 +6,7 @@ import client4 from "../../assets/testimonials/client4.avif";
 
 gsap.registerPlugin(ScrollTrigger);
 
+
 /* =========================================================
    TESTIMONIAL DATA
 ========================================================= */
@@ -18,6 +19,7 @@ const testimonials = [
     text: `“They didn’t just design our home. They taught us how to live in it. Every corner has a purpose now. We wake up every morning feeling like the house was built just for us — because it was.”`,
     name: "Jennifer Caldwell",
     role: "Homeowner, Austin, TX",
+    image: client4,
   },
 
   {
@@ -27,6 +29,7 @@ const testimonials = [
     text: `“They didn’t just design our home. They taught us how to live in it. Every corner has a purpose now. We wake up every morning feeling like the house was built just for us — because it was.”`,
     name: "Jennifer Caldwell",
     role: "Homeowner, Austin, TX",
+    image: client4,
   },
 
   {
@@ -36,12 +39,13 @@ const testimonials = [
     text: `“Every little detail was considered. The space feels effortless, but you can see the thought behind everything. It is exactly what we imagined and somehow even better.”`,
     name: "Sophia Williams",
     role: "Homeowner, Los Angeles, CA",
+    image: client4,
   },
 
   {
     number: "04/04",
     category: "Residential Design",
-    background: null,
+    background: "#ffffff",
     text: `“They didn’t just design our home. They taught us how to live in it. Every corner has a purpose now. We wake up every morning feeling like the house was built just for us — because it was.”`,
     name: "Jennifer Caldwell",
     role: "Homeowner, Austin, TX",
@@ -52,26 +56,25 @@ const testimonials = [
 
 /* =========================================================
    EXIT DIRECTIONS
-   Each card leaves in a different direction.
 ========================================================= */
 
 const exitDirections = [
   {
-    x: -1.25,
-    y: -1.05,
+    x: -1,
+    y: -1,
     rotation: -10,
   },
 
   {
-    x: 1.25,
-    y: -0.9,
-    rotation: 9,
+    x: 1,
+    y: -1,
+    rotation: 10,
   },
 
   {
-    x: -1.2,
-    y: 1.15,
-    rotation: -8,
+    x: -1,
+    y: 1,
+    rotation: -9,
   },
 ];
 
@@ -80,12 +83,14 @@ const exitDirections = [
    STAR
 ========================================================= */
 
-function StarIcon({ dark = true }) {
+function StarIcon() {
   return (
     <div
-      className={`testimonial-star ${
-        dark ? "text-[#1c1a18]" : "text-white"
-      }`}
+      aria-hidden="true"
+      className="
+        testimonial-star
+        text-[#1c1a18]
+      "
     >
       ✱
     </div>
@@ -97,12 +102,16 @@ function StarIcon({ dark = true }) {
    DOTS
 ========================================================= */
 
-function Dots({ dark = true }) {
+function Dots() {
   return (
     <div
-      className={`flex items-center gap-[5px] ${
-        dark ? "text-[#1c1a18]" : "text-white"
-      }`}
+      aria-hidden="true"
+      className="
+        flex
+        items-center
+        gap-[5px]
+        text-[#817b70]
+      "
     >
       <span className="block h-[6px] w-[6px] bg-current" />
       <span className="block h-[6px] w-[6px] bg-current" />
@@ -117,122 +126,182 @@ function Dots({ dark = true }) {
    TESTIMONIAL CARD
 ========================================================= */
 
-function TestimonialCard({ testimonial, index }) {
-  const isLast = index === testimonials.length - 1;
-
+function TestimonialCard({
+  testimonial,
+  index,
+}) {
   return (
     <article
-      className="testimonial-card absolute left-1/2 top-1/2 overflow-hidden"
+      className="
+        testimonial-card
+        absolute
+        left-1/2
+        top-1/2
+
+        overflow-hidden
+
+        rounded-none
+
+        will-change-transform
+
+        select-none
+      "
+
       data-index={index}
+
       style={{
-        backgroundColor: testimonial.background || "transparent",
+        backgroundColor: testimonial.background,
       }}
     >
 
-      {/* =================================================
-          CARD 4 — IMAGE BACKGROUND
-      ================================================= */}
+      {/* ===================================================
+          INNER
+      =================================================== */}
 
-      {isLast ? (
-        <>
-          <img
-            src={testimonial.image}
-            alt=""
-            className="absolute inset-0 h-full w-full object-cover"
-            draggable="false"
-          />
+      <div
+        className="
+          relative
 
-          {/* subtle image overlay */}
-          <div className="absolute inset-0 bg-black/10" />
+          flex
+          h-full
+          w-full
 
-          <div className="relative z-10 flex h-full flex-col justify-between p-[7%] text-white">
+          flex-col
+          justify-between
 
-            {/* TOP */}
-            <div className="flex items-start justify-between">
-              <StarIcon dark={false} />
-              <Dots dark={false} />
-            </div>
+          text-[#1c1a18]
+        "
+      >
 
-
-            {/* BOTTOM */}
-            <div>
-
-              <p className="testimonial-text mb-7 max-w-[96%] font-medium">
-                {testimonial.text}
-              </p>
-
-              <div>
-                <h3 className="testimonial-name font-medium">
-                  {testimonial.name}
-                </h3>
-
-                <p className="testimonial-role mt-1 text-white/70">
-                  {testimonial.role}
-                </p>
-              </div>
-
-            </div>
-
-          </div>
-        </>
-      ) : (
-
-        /* =================================================
-           CARDS 1–3 — SOLID COLORS
-        ================================================= */
+        {/* =================================================
+            TOP
+        ================================================= */}
 
         <div
-          className="relative flex h-full flex-col p-[7%] text-[#1c1a18]"
-          style={{
-            backgroundColor: testimonial.background,
-          }}
+          className="
+            flex
+            w-full
+            items-start
+            justify-between
+          "
         >
+          <StarIcon />
 
-          {/* TOP */}
-          <div className="flex items-start justify-between">
-
-            <StarIcon />
-
-            <Dots />
-
-          </div>
+          <Dots />
+        </div>
 
 
-          {/* BOTTOM CONTENT */}
-          <div className="mt-auto">
+        {/* =================================================
+            BOTTOM
+        ================================================= */}
 
-            <p className="testimonial-text font-medium">
-              {testimonial.text}
-            </p>
+        <div className="testimonial-bottom">
+
+          {/* =================================================
+              QUOTE
+          ================================================= */}
+
+          <p
+            className="
+              testimonial-text
+
+              font-[font2]
+              font-medium
+
+              tracking-[-0.035em]
+            "
+          >
+            {testimonial.text}
+          </p>
 
 
-            {/* PERSON */}
-            <div className="mt-8 flex items-center gap-4">
+          {/* =================================================
+              PERSON
+          ================================================= */}
 
-              {/* 
-                Your first 3 cards currently don't have
-                person images, so we don't render a broken
-                <img src={null} />.
-              */}
+          <div
+            className="
+              testimonial-person
 
-              <div>
+              flex
+              items-center
+            "
+          >
 
-                <h3 className="testimonial-name font-medium">
-                  {testimonial.name}
-                </h3>
+            {/* AVATAR */}
 
-                <p className="testimonial-role mt-1">
-                  {testimonial.role}
-                </p>
+            <div
+              className="
+                testimonial-avatar
 
-              </div>
+                relative
+                shrink-0
+                overflow-hidden
+
+                bg-[#dedbd5]
+              "
+            >
+              <img
+                src={testimonial.image}
+                alt=""
+                draggable="false"
+
+                className="
+                  absolute
+                  inset-0
+
+                  h-full
+                  w-full
+
+                  object-cover
+                "
+              />
+            </div>
+
+
+            {/* NAME */}
+
+            <div className="min-w-0">
+
+              <h3
+                className="
+                  testimonial-name
+
+                  font-[font2]
+                  font-medium
+
+                  leading-none
+                  tracking-[-0.035em]
+                "
+              >
+                {testimonial.name}
+              </h3>
+
+
+              <p
+                className="
+                  testimonial-role
+
+                  mt-[6px]
+
+                  font-[font2]
+                  font-normal
+
+                  leading-none
+
+                  text-[#817b70]
+                "
+              >
+                {testimonial.role}
+              </p>
 
             </div>
 
           </div>
 
         </div>
-      )}
+
+      </div>
 
     </article>
   );
@@ -261,17 +330,25 @@ export default function Testimonials() {
     }
 
 
+    /* =====================================================
+       GSAP CONTEXT
+    ===================================================== */
+
     const ctx = gsap.context(() => {
 
-      const cards = gsap.utils.toArray(".testimonial-card");
-
-      const counter = section.querySelector(
-        ".testimonial-counter"
+      const cards = gsap.utils.toArray(
+        ".testimonial-card"
       );
 
-      const category = section.querySelector(
-        ".testimonial-category"
-      );
+      const counter =
+        section.querySelector(
+          ".testimonial-counter"
+        );
+
+      const category =
+        section.querySelector(
+          ".testimonial-category"
+        );
 
 
       if (!cards.length) {
@@ -279,137 +356,144 @@ export default function Testimonials() {
       }
 
 
-      /* =====================================================
+      /* ===================================================
          RESPONSIVE VALUES
-      ===================================================== */
+      =================================================== */
 
       const getValues = () => {
 
         const width = window.innerWidth;
+        const height = window.innerHeight;
 
-        /* MOBILE */
+
+        /* -----------------------------------------------
+           MOBILE
+        ----------------------------------------------- */
+
         if (width < 640) {
 
           return {
+
+            stackOffset: 8,
+
+            scaleStep: 0.022,
+
+            exitX: width * 1.25,
+
+            exitY: height * 0.95,
+
+            scrollLength:
+              height * 4.5,
+
+            scrub: 0.65,
+          };
+        }
+
+
+        /* -----------------------------------------------
+           TABLET
+        ----------------------------------------------- */
+
+        if (width < 1024) {
+
+          return {
+
             stackOffset: 11,
 
             scaleStep: 0.025,
 
-            exitX: width * 1.15,
+            exitX: width * 1.3,
 
-            exitY: window.innerHeight * 0.95,
+            exitY: height * 0.95,
 
-            scrollLength: window.innerHeight * 4.2,
+            scrollLength:
+              height * 4.7,
 
-            scrub: 0.8,
+            scrub: 0.75,
           };
         }
 
 
-        /* TABLET */
-        if (width < 1024) {
+        /* -----------------------------------------------
+           DESKTOP
+        ----------------------------------------------- */
 
-          return {
-            stackOffset: 14,
-
-            scaleStep: 0.03,
-
-            exitX: width * 1.15,
-
-            exitY: window.innerHeight * 0.9,
-
-            scrollLength: window.innerHeight * 4.5,
-
-            scrub: 0.9,
-          };
-        }
-
-
-        /* DESKTOP */
         return {
 
-          stackOffset: 17,
+          stackOffset: 15,
 
-          scaleStep: 0.035,
+          scaleStep: 0.03,
 
-          exitX: width * 1.25,
+          exitX: width * 1.28,
 
-          exitY: window.innerHeight * 0.95,
+          exitY: height * 0.95,
 
-          scrollLength: window.innerHeight * 4.8,
+          scrollLength:
+            height * 4.9,
 
-          scrub: 1,
+          scrub: 0.85,
         };
       };
 
 
-      /* =====================================================
-         INITIAL CARD POSITION
-      ===================================================== */
+      /* ===================================================
+         SET INITIAL STACK
+      =================================================== */
 
-      const values = getValues();
+      const setInitialStack = () => {
+
+        const values = getValues();
 
 
-      /*
-        All cards start at the exact center.
+        cards.forEach((card, index) => {
 
-        Card 1:
-          scale 1
-          y 0
-          z-index highest
+          gsap.set(card, {
 
-        Card 2:
-          scale slightly smaller
-          y slightly lower
+            xPercent: -50,
 
-        Card 3:
-          smaller again
-          y lower
+            yPercent: -50,
 
-        Card 4:
-          smallest
-          y lower
-      */
+            x: 0,
 
-      cards.forEach((card, index) => {
+            y:
+              index *
+              values.stackOffset,
 
-        gsap.set(card, {
+            scale:
+              1 -
+              index *
+              values.scaleStep,
 
-          xPercent: -50,
+            rotation:
+              index === 0
+                ? 0
+                : index % 2 === 0
+                  ? -1
+                  : 1,
 
-          yPercent: -50,
+            opacity: 1,
 
-          x: 0,
+            zIndex:
+              cards.length -
+              index,
 
-          y: index * values.stackOffset,
+            transformOrigin:
+              "center center",
 
-          scale: 1 - index * values.scaleStep,
-
-          rotation:
-            index === 0
-              ? 0
-              : index % 2 === 0
-                ? -1
-                : 1,
-
-          opacity: 1,
-
-          zIndex: cards.length - index,
-
-          transformOrigin: "center center",
-
-          force3D: true,
+            force3D: true,
+          });
         });
+      };
 
-      });
+
+      setInitialStack();
 
 
-      /* =====================================================
+      /* ===================================================
          MASTER TIMELINE
-      ===================================================== */
+      =================================================== */
 
       const tl = gsap.timeline({
-
         defaults: {
           ease: "none",
         },
@@ -421,13 +505,12 @@ export default function Testimonials() {
           start: "top top",
 
           end: () => {
-
-            const current = getValues();
-
-            return `+=${current.scrollLength}`;
+            return `+=${getValues().scrollLength}`;
           },
 
-          scrub: () => getValues().scrub,
+          scrub: () => {
+            return getValues().scrub;
+          },
 
           pin: true,
 
@@ -438,122 +521,144 @@ export default function Testimonials() {
           invalidateOnRefresh: true,
 
 
-          /* ================================================
-             COUNTER UPDATE
-          ================================================ */
+          /* ===============================================
+             COUNTER + CATEGORY
+          =============================================== */
 
           onUpdate: (self) => {
 
-            const progress = self.progress;
+            const progress =
+              self.progress;
 
-            const transitions = testimonials.length - 1;
+
+            const totalTransitions =
+              testimonials.length - 1;
 
 
-            const currentIndex = Math.min(
+            /*
+             * Convert scroll progress
+             * into current card index.
+             */
 
-              testimonials.length - 1,
+            const rawIndex =
+              progress *
+              totalTransitions;
 
-              Math.floor(
-                progress * transitions + 0.0001
-              )
 
-            );
+            const activeIndex =
+              Math.min(
+                testimonials.length - 1,
+
+                Math.max(
+                  0,
+
+                  Math.floor(
+                    rawIndex + 0.00001
+                  )
+                )
+              );
 
 
             if (counter) {
 
               counter.textContent =
-                testimonials[currentIndex].number;
+                testimonials[
+                  activeIndex
+                ].number;
             }
 
 
             if (category) {
 
               category.textContent =
-                testimonials[currentIndex].category;
+                testimonials[
+                  activeIndex
+                ].category;
             }
-
           },
-
         },
-
       });
 
 
-      /* =====================================================
+      /* ===================================================
          CARD TRANSITIONS
-      ===================================================== */
+         
+         IMPORTANT:
+         
+         Each transition is completely reversible.
+         
+         Scrolling DOWN:
+         active card tears/falls away.
+         
+         Scrolling UP:
+         exact same animation reverses,
+         bringing the card back.
+      =================================================== */
 
       cards.forEach((card, index) => {
 
-        /*
-          Card 1 does not have a previous card.
-        */
         if (index === 0) {
           return;
         }
 
 
-        const previousCard = cards[index - 1];
+        const outgoing =
+          cards[index - 1];
+
+
+        const incoming =
+          cards[index];
+
 
         const direction =
-          exitDirections[index - 1];
+          exitDirections[
+            index - 1
+          ];
 
 
-        const currentValues = getValues();
+        const start =
+          index - 1;
 
 
-        const start = index - 1;
-
-        const duration = 1;
-
-
-        /* ==================================================
-           PREVIOUS CARD FLIES AWAY
-        ================================================== */
+        /* =================================================
+           OUTGOING CARD
+        ================================================= */
 
         tl.to(
-
-          previousCard,
-
+          outgoing,
           {
-
             x:
               direction.x *
-              currentValues.exitX,
+              getValues().exitX,
 
             y:
               direction.y *
-              currentValues.exitY,
+              getValues().exitY,
 
             rotation:
               direction.rotation,
 
-            scale: 0.9,
+            scale: 0.92,
 
             opacity: 1,
 
-            duration,
+            duration: 1,
 
             ease: "none",
-
           },
-
           start
-
         );
 
 
-        /* ==================================================
-           NEXT CARD COMES TO FRONT
-        ================================================== */
+        /* =================================================
+           INCOMING CARD
+           
+           It starts behind and rises to the center.
+        ================================================= */
 
         tl.to(
-
-          card,
-
+          incoming,
           {
-
             x: 0,
 
             y: 0,
@@ -564,100 +669,200 @@ export default function Testimonials() {
 
             opacity: 1,
 
-            zIndex: cards.length + 10,
-
-            duration,
+            duration: 1,
 
             ease: "none",
-
           },
-
           start
-
         );
 
 
-        /*
-          The cards behind the newly active card
-          should remain stacked.
-        */
+        /* =================================================
+           REBUILD REMAINING STACK
+        ================================================= */
 
-        cards.forEach((behindCard, behindIndex) => {
+        cards.forEach(
+          (behindCard, behindIndex) => {
 
-          if (
-            behindIndex > index
-          ) {
+            if (
+              behindIndex <= index
+            ) {
+              return;
+            }
+
 
             const depth =
-              behindIndex - index;
+              behindIndex -
+              index;
+
 
             tl.to(
-
               behindCard,
-
               {
+                x: 0,
 
                 y:
                   depth *
-                  currentValues.stackOffset,
+                  getValues()
+                    .stackOffset,
 
                 scale:
                   1 -
                   depth *
-                  currentValues.scaleStep,
+                  getValues()
+                    .scaleStep,
+
+                rotation:
+                  behindIndex % 2 === 0
+                    ? -1
+                    : 1,
 
                 opacity: 1,
 
-                zIndex:
-                  cards.length -
-                  behindIndex,
-
-                duration,
+                duration: 1,
 
                 ease: "none",
-
               },
 
               start
-
             );
-
           }
+        );
 
-        });
 
+        /* =================================================
+           Z-INDEX FIX
+           
+           This is important for reverse scrolling.
+           
+           We use .set() instead of permanently changing
+           zIndex inside the tween.
+        ================================================= */
+
+        tl.set(
+          outgoing,
+          {
+            zIndex:
+              cards.length -
+              index +
+              10,
+          },
+          start
+        );
+
+
+        tl.set(
+          incoming,
+          {
+            zIndex:
+              cards.length -
+              index +
+              20,
+          },
+          start + 0.98
+        );
+
+
+        cards.forEach(
+          (behindCard, behindIndex) => {
+
+            if (
+              behindIndex <= index
+            ) {
+              return;
+            }
+
+
+            tl.set(
+              behindCard,
+              {
+                zIndex:
+                  cards.length -
+                  behindIndex,
+              },
+              start + 0.98
+            );
+          }
+        );
       });
 
 
-      /* =====================================================
-         INITIAL COUNTER
-      ===================================================== */
+      /* ===================================================
+         INITIAL META
+      =================================================== */
 
       if (counter) {
+
         counter.textContent =
           testimonials[0].number;
       }
 
+
       if (category) {
+
         category.textContent =
           testimonials[0].category;
       }
 
 
-      /* =====================================================
-         REFRESH
-      ===================================================== */
+      /* ===================================================
+         RESPONSIVE REFRESH
+      =================================================== */
+
+      let resizeTimer;
+
+
+      const refresh = () => {
+
+        clearTimeout(
+          resizeTimer
+        );
+
+
+        resizeTimer =
+          setTimeout(() => {
+
+            setInitialStack();
+
+            ScrollTrigger.refresh();
+
+          }, 100);
+      };
+
+
+      window.addEventListener(
+        "resize",
+        refresh
+      );
+
 
       requestAnimationFrame(() => {
+
         ScrollTrigger.refresh();
+
       });
+
+
+      /* ===================================================
+         CLEANUP
+      =================================================== */
+
+      return () => {
+
+        clearTimeout(
+          resizeTimer
+        );
+
+        window.removeEventListener(
+          "resize",
+          refresh
+        );
+
+        tl.kill();
+      };
 
     }, section);
 
-
-    /* =======================================================
-       CLEANUP
-    ======================================================= */
 
     return () => {
       ctx.revert();
@@ -674,62 +879,85 @@ export default function Testimonials() {
 
     <section
       ref={sectionRef}
-      className="relative w-full overflow-hidden bg-[#f5f3ef]"
+
+      className="
+        testimonial-section
+
+        relative
+        w-full
+
+        overflow-hidden
+
+        bg-[#f5f3ef]
+      "
     >
 
       {/* =====================================================
           PINNED AREA
-
-          IMPORTANT:
-          This has a real height.
-          Previously your section was being pinned at
-          height: 0px because its children were absolute.
       ===================================================== */}
 
       <div
         ref={pinRef}
+
         className="
           relative
-          h-screen
-          min-h-[650px]
+
+          h-[100svh]
+
+          min-h-[620px]
+
           w-full
+
           overflow-hidden
         "
       >
 
-
-        {/* =================================================
-            TOP HEADER
-        ================================================= */}
+        {/* ===================================================
+            HEADER
+        =================================================== */}
 
         <div
           className="
             absolute
             left-0
             top-0
-            z-30
+
+            z-40
+
             w-full
+
             px-5
             pt-5
+
             sm:px-7
             sm:pt-7
+
             md:px-10
             md:pt-9
+
             lg:px-12
             lg:pt-10
           "
         >
 
-          {/* Eyebrow */}
+          {/* EYEBROW */}
 
           <div
             className="
               text-center
+
               font-[font2]
+
               text-[10px]
+
+              font-medium
+
               tracking-[0.08em]
+
               text-[#817b70]
+
               sm:text-[11px]
+
               md:text-[12px]
             "
           >
@@ -737,21 +965,32 @@ export default function Testimonials() {
           </div>
 
 
-          {/* Heading */}
+          {/* HEADING */}
 
           <h2
             className="
               mt-2
+
               text-center
+
               font-[font2]
+
               text-[18px]
+
               font-bold
+
               uppercase
+
               leading-none
+
               tracking-[-0.055em]
+
               text-[#1c1a18]
+
               sm:text-[24px]
+
               md:text-[30px]
+
               lg:text-[36px]
             "
           >
@@ -761,17 +1000,21 @@ export default function Testimonials() {
         </div>
 
 
-        {/* =================================================
+        {/* ===================================================
             CARD STACK
-        ================================================= */}
+        =================================================== */}
 
         <div
           ref={cardsRef}
+
           className="
             absolute
+
             left-1/2
             top-1/2
+
             z-10
+
             h-0
             w-0
           "
@@ -781,8 +1024,14 @@ export default function Testimonials() {
             (testimonial, index) => (
 
               <TestimonialCard
-                key={testimonial.number}
-                testimonial={testimonial}
+                key={
+                  testimonial.number
+                }
+
+                testimonial={
+                  testimonial
+                }
+
                 index={index}
               />
 
@@ -792,28 +1041,36 @@ export default function Testimonials() {
         </div>
 
 
-        {/* =================================================
-            BOTTOM META
-        ================================================= */}
+        {/* ===================================================
+            SIDE INFORMATION
+        =================================================== */}
 
         <div
           className="
+            pointer-events-none
+
             absolute
-            bottom-0
             left-0
-            z-30
+            top-1/2
+
+            z-40
+
             flex
+
             w-full
-            items-end
+
+            -translate-y-1/2
+
+            items-center
             justify-between
-            px-5
-            pb-5
-            sm:px-7
-            sm:pb-7
-            md:px-10
-            md:pb-9
-            lg:px-12
-            lg:pb-10
+
+            px-6
+
+            sm:px-10
+
+            md:px-16
+
+            lg:px-24
           "
         >
 
@@ -822,13 +1079,24 @@ export default function Testimonials() {
           <div
             className="
               testimonial-counter
+
               font-[font2]
-              text-[11px]
+
+              text-[12px]
+
               font-semibold
+
+              leading-none
+
               tracking-[-0.02em]
+
               text-[#817b70]
-              sm:text-[12px]
-              md:text-[13px]
+
+              sm:text-[13px]
+
+              md:text-[14px]
+
+              lg:text-[15px]
             "
           >
             01/04
@@ -840,14 +1108,26 @@ export default function Testimonials() {
           <div
             className="
               testimonial-category
+
               text-right
+
               font-[font2]
-              text-[11px]
+
+              text-[12px]
+
               font-semibold
+
+              leading-none
+
               tracking-[-0.02em]
+
               text-[#817b70]
-              sm:text-[12px]
-              md:text-[13px]
+
+              sm:text-[13px]
+
+              md:text-[14px]
+
+              lg:text-[15px]
             "
           >
             Lighting Design
@@ -856,6 +1136,338 @@ export default function Testimonials() {
         </div>
 
       </div>
+
+
+      {/* =====================================================
+          CARD STYLES
+      ===================================================== */}
+
+      <style>{`
+
+        /* ===================================================
+           DESKTOP
+        =================================================== */
+
+        .testimonial-card {
+          width: 410px;
+          height: 526px;
+
+          aspect-ratio: 410 / 526;
+        }
+
+
+        .testimonial-card > div {
+          padding: 20px;
+        }
+
+
+        /* ===================================================
+           STAR
+        =================================================== */
+
+        .testimonial-star {
+          width: 48px;
+          height: 48px;
+
+          display: flex;
+
+          align-items: center;
+
+          justify-content: flex-start;
+
+          font-family: Arial, sans-serif;
+
+          font-size: 47px;
+
+          line-height: 1;
+
+          transform:
+            translateY(-3px);
+
+          user-select: none;
+        }
+
+
+        /* ===================================================
+           BOTTOM
+        =================================================== */
+
+        .testimonial-bottom {
+          width: 100%;
+        }
+
+
+        /* ===================================================
+           TEXT
+        =================================================== */
+
+        .testimonial-text {
+          width: 100%;
+
+          max-width: 365px;
+
+          margin: 0;
+
+          font-size: 24px;
+
+          line-height: 1.34;
+        }
+
+
+        /* ===================================================
+           PERSON
+        =================================================== */
+
+        .testimonial-person {
+          margin-top: 32px;
+
+          gap: 10px;
+        }
+
+
+        /* ===================================================
+           AVATAR
+        =================================================== */
+
+        .testimonial-avatar {
+          width: 56px;
+
+          height: 56px;
+        }
+
+
+        /* ===================================================
+           NAME
+        =================================================== */
+
+        .testimonial-name {
+          font-size: 24px;
+        }
+
+
+        /* ===================================================
+           ROLE
+        =================================================== */
+
+        .testimonial-role {
+          font-size: 13px;
+        }
+
+
+        /* ===================================================
+           TABLET
+        =================================================== */
+
+        @media (max-width: 1023px) {
+
+          .testimonial-card {
+
+            width:
+              min(
+                410px,
+                calc(100vw - 80px)
+              );
+
+            height: auto;
+
+            aspect-ratio:
+              410 / 526;
+          }
+
+
+          .testimonial-card > div {
+            padding: 5%;
+          }
+
+
+          .testimonial-star {
+
+            font-size:
+              clamp(
+                36px,
+                5vw,
+                47px
+              );
+          }
+
+
+          .testimonial-text {
+
+            font-size:
+              clamp(
+                20px,
+                3vw,
+                24px
+              );
+          }
+
+
+          .testimonial-name {
+
+            font-size:
+              clamp(
+                19px,
+                2.7vw,
+                24px
+              );
+          }
+
+        }
+
+
+        /* ===================================================
+           MOBILE
+        =================================================== */
+
+        @media (max-width: 639px) {
+
+          .testimonial-card {
+
+            width:
+              calc(100vw - 32px);
+
+            height: auto;
+
+            aspect-ratio:
+              410 / 526;
+          }
+
+
+          .testimonial-card > div {
+
+            padding: 18px;
+          }
+
+
+          .testimonial-star {
+
+            width: 40px;
+
+            height: 40px;
+
+            font-size: 39px;
+
+            transform:
+              translateY(-2px);
+          }
+
+
+          .testimonial-text {
+
+            max-width: 100%;
+
+            font-size:
+              clamp(
+                18px,
+                5.4vw,
+                23px
+              );
+
+            line-height: 1.32;
+
+            letter-spacing:
+              -0.035em;
+          }
+
+
+          .testimonial-person {
+
+            margin-top: 24px;
+
+            gap: 9px;
+          }
+
+
+          .testimonial-avatar {
+
+            width: 48px;
+
+            height: 48px;
+          }
+
+
+          .testimonial-name {
+
+            font-size:
+              clamp(
+                18px,
+                5vw,
+                22px
+              );
+          }
+
+
+          .testimonial-role {
+
+            margin-top: 5px;
+
+            font-size: 11px;
+          }
+
+
+          .testimonial-section h2 {
+
+            font-size: 17px;
+          }
+
+        }
+
+
+        /* ===================================================
+           VERY SMALL MOBILE
+        =================================================== */
+
+        @media (max-width: 380px) {
+
+          .testimonial-card {
+
+            width:
+              calc(100vw - 24px);
+          }
+
+
+          .testimonial-card > div {
+
+            padding: 15px;
+          }
+
+
+          .testimonial-text {
+
+            font-size: 17px;
+
+            line-height: 1.3;
+          }
+
+
+          .testimonial-person {
+
+            margin-top: 18px;
+          }
+
+
+          .testimonial-avatar {
+
+            width: 44px;
+
+            height: 44px;
+          }
+
+
+          .testimonial-name {
+
+            font-size: 17px;
+          }
+
+
+          .testimonial-role {
+
+            font-size: 10px;
+          }
+
+        }
+
+      `}</style>
 
     </section>
   );
