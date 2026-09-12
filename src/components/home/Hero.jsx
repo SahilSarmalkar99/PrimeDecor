@@ -3,60 +3,7 @@ import React from "react";
 export default function Hero() {
   return (
     <div className="min-h-screen overflow-x-hidden bg-[#101010] text-white">
-      {/* ================= NAVBAR ================= */}
-      <header className="h-[101px] border-b border-[#383838]">
-        <div
-          className="
-            mx-auto flex h-full
-            w-[calc(100%-40px)] max-w-[1512px]
-            items-center justify-between
-          "
-        >
-          {/* Logo */}
-          <div
-            className="
-              text-[27px]
-              font-bold
-              leading-none
-              tracking-[-1.5px]
-            "
-          >
-            PrimeDecor
-          </div>
-
-          {/* Desktop Navigation */}
-          <nav className="hidden items-center gap-[20px] md:flex">
-            {[
-              "Home(01)",
-              "About(02)",
-              "Service(03)",
-              "Project(04)",
-              "Blog(05)",
-              "Contact(06)",
-            ].map((item) => (
-              <a
-                key={item}
-                href="#"
-                className="
-                  text-[17px]
-                  font-medium
-                  tracking-[-0.5px]
-                  transition-opacity
-                  hover:opacity-60
-                "
-              >
-                {item}
-              </a>
-            ))}
-          </nav>
-
-          {/* Mobile menu */}
-          <button className="flex flex-col gap-[6px] md:hidden">
-            <span className="block h-[2px] w-[25px] bg-white" />
-            <span className="block h-[2px] w-[25px] bg-white" />
-          </button>
-        </div>
-      </header>
+      
 
       {/* ================= HERO ================= */}
       <main>
