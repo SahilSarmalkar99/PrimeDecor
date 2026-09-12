@@ -143,7 +143,6 @@ export default function useInteriorImageTransition(
         },
       });
 
-      ScrollTrigger.refresh();
     }, stage);
 
     return () => ctx.revert();

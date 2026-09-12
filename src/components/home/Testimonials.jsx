@@ -836,13 +836,6 @@ export default function Testimonials() {
       );
 
 
-      requestAnimationFrame(() => {
-
-        ScrollTrigger.refresh();
-
-      });
-
-
       /* ===================================================
          CLEANUP
       =================================================== */

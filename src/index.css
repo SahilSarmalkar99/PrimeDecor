@@ -45,3 +45,27 @@
 .brands-track:hover {
   animation-play-state: paused;
 }
+
+/* Targeted responsive safeguards — desktop/mobile design remains unchanged. */
+html,
+body,
+#root {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .prime-hero-shell {
+    width: calc(100% - 120px);
+  }
+
+  .prime-hero-type {
+    height: 410px;
+    padding-top: 78px;
+  }
+
+  .prime-hero-title {
+    font-size: clamp(64px, 10vw, 120px);
+  }
+}

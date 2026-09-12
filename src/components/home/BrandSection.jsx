@@ -600,10 +600,6 @@ export default function BrandSection() {
           preventOverlaps: true,
         });
 
-        requestAnimationFrame(() => {
-          ScrollTrigger.refresh();
-        });
-
         return () => {
           trigger.kill();
           tl.kill();
@@ -756,10 +752,6 @@ export default function BrandSection() {
           fastScrollEnd: false,
 
           anticipatePin: 1,
-        });
-
-        requestAnimationFrame(() => {
-          ScrollTrigger.refresh();
         });
 
         return () => {
@@ -952,10 +944,6 @@ export default function BrandSection() {
           fastScrollEnd: false,
 
           anticipatePin: 1,
-        });
-
-        requestAnimationFrame(() => {
-          ScrollTrigger.refresh();
         });
 
         return () => {
