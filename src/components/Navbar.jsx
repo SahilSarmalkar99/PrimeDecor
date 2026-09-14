@@ -13,7 +13,7 @@ const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <header className="relative z-50 h-[80px] border-b border-[#383838] bg-[#0d0d0d] text-white sm:h-[90px] lg:h-[101px]">
+    <header className="relative z-50 h-[80px] border-b border-[#666666] bg-[#0d0d0d] text-white sm:h-[90px] lg:h-[101px]">
       <div
         className="
           mx-auto flex h-full
@@ -117,7 +117,7 @@ const Navbar = () => {
           w-full
           overflow-hidden
           border-b
-          border-[#383838]
+          border-[#666666]
           bg-[#0d0d0d]
           transition-all
           duration-500
@@ -141,7 +141,7 @@ const Navbar = () => {
                 items-center
                 justify-between
                 border-b
-                border-[#383838]
+                border-[#666666]
                 py-[17px]
                 text-[16px]
                 font-medium

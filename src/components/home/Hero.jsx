@@ -1,5 +1,7 @@
 import React from "react";
 import useTextReveal from "../../hooks/useTextReveal";
+import HoverImageReveal from "./HoverImageReveal";
+import useLineReveal from "../../hooks/useLineReveal";
 
 export default function Hero() {
   /* =========================================================
@@ -9,17 +11,23 @@ export default function Hero() {
   const heroRef = useTextReveal({
     selector: "p,[data-text-reveal]",
 
-    duration: 1.2,
+    duration: 2,
 
-    stagger: 0.06,
+    stagger: 0.25,
 
     ease: "power4.out",
 
     start: "top 85%",
   });
 
+  const gridRef = useLineReveal({
+  duration: 5,
+  stagger: 0.4,
+  start: "top 85%",
+});
+
   return (
-    <div className="min-h-screen overflow-x-hidden bg-[#101010] text-white">
+    <div ref={gridRef} className="min-h-screen overflow-x-hidden bg-[#101010] text-white">
       {/* =====================================================
           HERO
       ===================================================== */}
@@ -33,7 +41,7 @@ export default function Hero() {
             w-[calc(100%-32px)]
             overflow-hidden
             border-x
-            border-[#383838]
+            border-[#666666]
 
             sm:w-[calc(100%-40px)]
 
@@ -141,33 +149,7 @@ export default function Hero() {
               IMAGE ROW
           ================================================= */}
 
-          <div className="border-t border-[#383838]">
-            <div
-              className="
-                mx-auto
-                aspect-[742/386]
-                w-[75%]
-                overflow-hidden
-
-                sm:w-[65%]
-
-                md:w-[58%]
-
-                lg:w-[49.2%]
-              "
-            >
-              <img
-                src="/hero.avif"
-                alt="Luxury interior"
-                className="
-                  block
-                  h-full
-                  w-full
-                  object-cover
-                "
-              />
-            </div>
-          </div>
+          <HoverImageReveal />
 
           {/* =================================================
               BOTTOM / SERVICES
@@ -177,7 +159,7 @@ export default function Hero() {
             className="
               min-h-[500px]
               border-t
-              border-[#383838]
+              border-[#666666]
               px-[18px]
               py-[25px]
 
@@ -401,11 +383,12 @@ export default function Hero() {
       ===================================================== */}
 
       <div
+      
         className="
           h-[80px]
           w-full
           border-t
-          border-[#383838]
+          border-[#666666]
 
           sm:h-[90px]
 

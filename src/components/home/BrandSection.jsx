@@ -1,6 +1,7 @@
 import React, { useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+
 import brand1 from "../../../public/brand-1.mp4";
 import brand2 from "../../../public/brand-2.mp4";
 import brand from "../../../public/brand-3.mp4";
@@ -101,24 +102,40 @@ function PauseButton() {
    CARD
 ========================================================= */
 
-function Card({ card, cardRef }) {
+function Card({ card, cardRef, mobile = false }) {
   return (
     <div
       ref={cardRef}
-      className="
+      className={`
         brand-card
-        absolute
-        left-1/2
-        top-[10vh]
-        z-20
-        -translate-x-1/2
-        -translate-y-1/2
         overflow-hidden
         bg-black
-        will-change-transform
-        transform-gpu
         select-none
-      "
+
+        ${
+          mobile
+            ? `
+              relative
+              left-auto
+              top-auto
+              mx-auto
+              w-full
+              max-w-[360px]
+              translate-x-0
+              translate-y-0
+            `
+            : `
+              absolute
+              left-1/2
+              top-[10vh]
+              z-20
+              -translate-x-1/2
+              -translate-y-1/2
+              transform-gpu
+              will-change-transform
+            `
+        }
+      `}
     >
       {/* ===================================================
           VIDEO
@@ -153,8 +170,14 @@ function Card({ card, cardRef }) {
 
       <Plus
         className="
-          left: clamp(20px, 7vw, 38px)
-          top: clamp(22px, 7vw, 40px)
+          left-[20px]
+          top-[22px]
+
+          sm:left-[26px]
+          sm:top-[28px]
+
+          lg:left-[38px]
+          lg:top-[40px]
         "
       />
 
@@ -164,8 +187,14 @@ function Card({ card, cardRef }) {
 
       <Plus
         className="
-          right: clamp(20px, 7vw, 38px)
-          top: clamp(22px, 7vw, 40px)
+          right-[20px]
+          top-[22px]
+
+          sm:right-[26px]
+          sm:top-[28px]
+
+          lg:right-[38px]
+          lg:top-[40px]
         "
       />
 
@@ -181,8 +210,12 @@ function Card({ card, cardRef }) {
           flex-col
           items-center
           justify-center
-          px-[35px]
+          px-6
           text-center
+
+          sm:px-8
+
+          lg:px-[35px]
         "
       >
         {/* NUMBER */}
@@ -191,7 +224,7 @@ function Card({ card, cardRef }) {
           <span
             className="
               font-[font2]
-              text-[clamp(42px,3.2vw,60px)]
+              text-[clamp(40px,9vw,60px)]
               font-medium
               leading-none
               tracking-[-0.07em]
@@ -204,7 +237,7 @@ function Card({ card, cardRef }) {
             className="
               ml-[3px]
               font-[font2]
-              text-[clamp(20px,1.5vw,29px)]
+              text-[clamp(18px,4vw,29px)]
               font-medium
               leading-none
               tracking-[-0.05em]
@@ -218,13 +251,15 @@ function Card({ card, cardRef }) {
 
         <p
           className="
-            mt-[28px]
+            mt-6
             max-w-[280px]
             font-[font2]
-            text-[clamp(17px,1.35vw,24px)]
+            text-[clamp(16px,4vw,24px)]
             font-medium
             leading-[1.2]
             tracking-[-0.04em]
+
+            sm:mt-7
           "
         >
           {card.text}
@@ -237,8 +272,14 @@ function Card({ card, cardRef }) {
 
       <Plus
         className="
-          bottom: clamp(22px, 7vw, 39px)
-          left: clamp(20px, 7vw, 38px)
+          bottom-[22px]
+          left-[20px]
+
+          sm:bottom-[28px]
+          sm:left-[26px]
+
+          lg:bottom-[39px]
+          lg:left-[38px]
         "
       />
 
@@ -249,8 +290,14 @@ function Card({ card, cardRef }) {
       <div
         className="
           absolute
-          bottom: clamp(22px, 7vw, 39px)
-          right: clamp(20px, 7vw, 38px)
+          bottom-[22px]
+          right-[20px]
+
+          sm:bottom-[28px]
+          sm:right-[26px]
+
+          lg:bottom-[39px]
+          lg:right-[38px]
         "
       >
         <PauseButton />
@@ -266,15 +313,12 @@ function Card({ card, cardRef }) {
 export default function BrandSection() {
   const sectionRef = useRef(null);
 
+  /* Desktop refs */
   const card1 = useRef(null);
   const card2 = useRef(null);
   const card3 = useRef(null);
   const card4 = useRef(null);
   const card5 = useRef(null);
-
-  /* =======================================================
-     GSAP
-  ======================================================= */
 
   useLayoutEffect(() => {
     const section = sectionRef.current;
@@ -285,7 +329,8 @@ export default function BrandSection() {
       const mm = gsap.matchMedia();
 
       /* =====================================================
-         DESKTOP
+         DESKTOP ONLY
+         GSAP CARD ANIMATION
       ===================================================== */
 
       mm.add("(min-width: 1025px)", () => {
@@ -297,11 +342,9 @@ export default function BrandSection() {
           card5.current,
         ];
 
-        /* ===================================================
+        /* ---------------------------------------------------
            INITIAL STACK
-
-           KEEPING YOUR ORIGINAL VALUES
-        =================================================== */
+        --------------------------------------------------- */
 
         gsap.set(cardEls, {
           x: 0,
@@ -309,15 +352,13 @@ export default function BrandSection() {
           rotation: 0,
           scale: 1.18,
           opacity: 1,
-
           force3D: true,
-
           transformOrigin: "center center",
         });
 
-        /* ===================================================
+        /* ---------------------------------------------------
            Z INDEX
-        =================================================== */
+        --------------------------------------------------- */
 
         gsap.set(card1.current, {
           zIndex: 20,
@@ -339,24 +380,9 @@ export default function BrandSection() {
           zIndex: 20,
         });
 
-        /* ===================================================
+        /* ---------------------------------------------------
            DESKTOP TIMELINE
-
-           IMPORTANT:
-
-           Horizontal distances are NOT changed.
-
-           INNER:
-             -20vw
-             +20vw
-
-           OUTER:
-             -41vw
-             +41vw
-
-           Only the Y positions are corrected so the
-           cards form a symmetrical arc.
-        =================================================== */
+        --------------------------------------------------- */
 
         const tl = gsap.timeline({
           defaults: {
@@ -366,7 +392,7 @@ export default function BrandSection() {
 
         /* ===================================================
            PHASE 1
-           ALL CARDS MOVE DOWN TOGETHER
+           ALL CARDS MOVE DOWN
         =================================================== */
 
         tl.to(
@@ -374,16 +400,13 @@ export default function BrandSection() {
           {
             y: "70vh",
             scale: 1,
-
             duration: 2.2,
-
             ease: "power2.inOut",
           },
-          0,
+          0
         );
 
         /* ===================================================
-           PHASE 2
            INNER LEFT
         =================================================== */
 
@@ -391,26 +414,16 @@ export default function BrandSection() {
           card2.current,
           {
             x: "-20vw",
-
-            /*
-              Inner card is slightly lower than center.
-              This creates the upper part of the arc.
-            */
             y: "80vh",
-
             rotation: -14,
-
             scale: 1,
-
             duration: 2.2,
-
             ease: "power3.inOut",
           },
-          1.5,
+          1.5
         );
 
         /* ===================================================
-           PHASE 2
            INNER RIGHT
         =================================================== */
 
@@ -418,50 +431,33 @@ export default function BrandSection() {
           card4.current,
           {
             x: "20vw",
-
-            /*
-              EXACT MIRROR OF CARD 2
-            */
             y: "80vh",
-
             rotation: 14,
-
             scale: 1,
-
             duration: 2.2,
-
             ease: "power3.inOut",
           },
-          1.5,
+          1.5
         );
 
         /* ===================================================
-           PHASE 3
-           CENTER CARD
-
-           CENTER = TOP OF SEMICIRCLE
+           CENTER
         =================================================== */
 
         tl.to(
           card3.current,
           {
             x: 0,
-
             y: "70vh",
-
             rotation: 0,
-
             scale: 1,
-
             duration: 2.2,
-
             ease: "power3.inOut",
           },
-          1.5,
+          1.5
         );
 
         /* ===================================================
-           PHASE 4
            OUTER LEFT
         =================================================== */
 
@@ -469,68 +465,35 @@ export default function BrandSection() {
           card1.current,
           {
             x: "-40vw",
-
-            /*
-              LOWEST POINT OF THE ARC
-            */
             y: "100vh",
-
             rotation: -27,
-
             scale: 1,
-
             duration: 2.5,
-
             ease: "power3.inOut",
           },
-          2,
+          2
         );
 
         /* ===================================================
-           PHASE 4
            OUTER RIGHT
-
-           IMPORTANT BUG FIX:
-
-           Your previous code had:
-
-             y: "56vh"
-
-           here.
-
-           That destroyed the symmetry.
-
-           It is now exactly:
-
-             y: "76vh"
         =================================================== */
 
         tl.to(
           card5.current,
           {
             x: "40vw",
-
             y: "100vh",
-
             rotation: 27,
-
             scale: 1,
-
             duration: 2.5,
-
             ease: "power3.inOut",
           },
-          2,
+          2
         );
 
         /* ===================================================
-   PHASE 5
-   FINAL ARC REFINEMENT
-
-   KEEPING YOUR CUSTOM POSITIONS:
-   INNER  = 80vh
-   OUTER  = 100vh
-=================================================== */
+           FINAL ARC REFINEMENT
+        =================================================== */
 
         tl.to(
           card1.current,
@@ -541,7 +504,7 @@ export default function BrandSection() {
             duration: 1.8,
             ease: "power2.inOut",
           },
-          4.2,
+          4.2
         );
 
         tl.to(
@@ -553,14 +516,11 @@ export default function BrandSection() {
             duration: 1.8,
             ease: "power2.inOut",
           },
-          4.2,
+          4.2
         );
 
         /* ===================================================
            FINAL HOLD
-
-           Gives the user enough time to see the completed
-           semicircle before the section finishes.
         =================================================== */
 
         tl.to(
@@ -568,35 +528,22 @@ export default function BrandSection() {
           {
             duration: 3,
           },
-          5.5,
+          5.5
         );
 
         /* ===================================================
            SCROLL TRIGGER
-
-           scrub 1.5 = smoother than 1
-
-           No pin added.
-           No change to your overall scroll behavior.
         =================================================== */
 
         const trigger = ScrollTrigger.create({
           trigger: section,
-
           start: "top top",
-
           end: "bottom bottom",
-
           scrub: 1.5,
-
           animation: tl,
-
           invalidateOnRefresh: true,
-
           anticipatePin: 0,
-
           fastScrollEnd: false,
-
           preventOverlaps: true,
         });
 
@@ -608,11 +555,7 @@ export default function BrandSection() {
 
       /* =====================================================
          TABLET
-
-         RESPONSIVE BEHAVIOUR:
-         Cards are shown ONE BY ONE on smaller screens.
-         The desktop 80vh / 100vh arc is intentionally kept
-         only for desktop.
+         NO CARD GSAP
       ===================================================== */
 
       mm.add("(min-width: 769px) and (max-width: 1024px)", () => {
@@ -624,149 +567,20 @@ export default function BrandSection() {
           card5.current,
         ];
 
-        /*
-          One-card-at-a-time layout.
-
-          Keep every card in the same center position.
-          GSAP controls which card is visible.
-        */
-
         gsap.set(cardEls, {
-          x: 0,
-          y: "50vh",
-          rotation: 0,
-          scale: 0.82,
-          opacity: 0,
-          force3D: true,
-          transformOrigin: "center center",
-        });
-
-        gsap.set(card1.current, {
-          opacity: 1,
-          y: "50vh",
-          zIndex: 50,
-        });
-
-        gsap.set(card2.current, { zIndex: 40 });
-        gsap.set(card3.current, { zIndex: 30 });
-        gsap.set(card4.current, { zIndex: 20 });
-        gsap.set(card5.current, { zIndex: 10 });
-
-        /*
-          ONE-BY-ONE TIMELINE
-
-          Each card gets its own scroll moment:
-            Card 1
-              ↓
-            Card 2
-              ↓
-            Card 3
-              ↓
-            Card 4
-              ↓
-            Card 5
-
-          No side-by-side cards on tablet.
-        */
-
-        const tl = gsap.timeline({
-          defaults: {
-            ease: "none",
-          },
-        });
-
-        const showNextCard = (current, next, position) => {
-          tl.to(
-            current,
-            {
-              y: "43vh",
-              opacity: 0,
-              scale: 0.78,
-              duration: 0.7,
-              ease: "power2.inOut",
-            },
-            position
-          );
-
-          tl.fromTo(
-            next,
-            {
-              y: "57vh",
-              opacity: 0,
-              scale: 0.78,
-              rotation: 0,
-            },
-            {
-              y: "50vh",
-              opacity: 1,
-              scale: 0.82,
-              rotation: 0,
-              duration: 0.7,
-              ease: "power2.out",
-            },
-            position + 0.15
-          );
-        };
-
-        /*
-          Small hold before first transition.
-        */
-
-        tl.to({}, { duration: 0.8 });
-
-        showNextCard(card1.current, card2.current, 0.8);
-        tl.to({}, { duration: 0.65 });
-
-        showNextCard(card2.current, card3.current, 2.3);
-        tl.to({}, { duration: 0.65 });
-
-        showNextCard(card3.current, card4.current, 3.8);
-        tl.to({}, { duration: 0.65 });
-
-        showNextCard(card4.current, card5.current, 5.3);
-
-        /*
-          Final hold.
-        */
-
-        tl.to({}, { duration: 1.2 });
-
-        const trigger = ScrollTrigger.create({
-          trigger: section,
-
-          start: "top top",
-
-          /*
-            More scroll length so every card has enough
-            breathing room.
-          */
-
-          end: "+=430%",
-
-          scrub: 1.4,
-
-          animation: tl,
-
-          invalidateOnRefresh: true,
-
-          fastScrollEnd: false,
-
-          anticipatePin: 1,
+          clearProps: "all",
         });
 
         return () => {
-          trigger.kill();
-          tl.kill();
+          gsap.set(cardEls, {
+            clearProps: "all",
+          });
         };
       });
 
       /* =====================================================
          MOBILE
-
-         ONE CARD AT A TIME
-
-         No semicircle on mobile.
-         This keeps the section clean and usable on phones.
+         NO CARD GSAP
       ===================================================== */
 
       mm.add("(max-width: 768px)", () => {
@@ -778,205 +592,37 @@ export default function BrandSection() {
           card5.current,
         ];
 
-        /*
-          Responsive card position.
-
-          Cards remain centered horizontally and are shown
-          one at a time.
-        */
-
         gsap.set(cardEls, {
-          x: 0,
-          y: "48vh",
-          rotation: 0,
-          scale: 0.84,
-          opacity: 0,
-          force3D: true,
-          transformOrigin: "center center",
-        });
-
-        /*
-          Only first card is visible initially.
-        */
-
-        gsap.set(card1.current, {
-          opacity: 1,
-          y: "48vh",
-          scale: 0.84,
-          zIndex: 50,
-        });
-
-        gsap.set(card2.current, { zIndex: 40 });
-        gsap.set(card3.current, { zIndex: 30 });
-        gsap.set(card4.current, { zIndex: 20 });
-        gsap.set(card5.current, { zIndex: 10 });
-
-        /*
-          ONE-BY-ONE MOBILE TIMELINE
-
-          The movement is deliberately vertical and subtle.
-          No cards overlap each other.
-        */
-
-        const tl = gsap.timeline({
-          defaults: {
-            ease: "none",
-          },
-        });
-
-        /*
-          Initial hold.
-        */
-
-        tl.to({}, { duration: 0.9 });
-
-        const showNextCard = (current, next, position) => {
-          /*
-            Current card leaves upward slightly.
-          */
-
-          tl.to(
-            current,
-            {
-              y: "40vh",
-              opacity: 0,
-              scale: 0.78,
-              duration: 0.65,
-              ease: "power2.inOut",
-            },
-            position
-          );
-
-          /*
-            Next card enters from below.
-          */
-
-          tl.fromTo(
-            next,
-            {
-              y: "56vh",
-              opacity: 0,
-              scale: 0.78,
-              rotation: 0,
-            },
-            {
-              y: "48vh",
-              opacity: 1,
-              scale: 0.84,
-              rotation: 0,
-              duration: 0.7,
-              ease: "power2.out",
-            },
-            position + 0.12
-          );
-        };
-
-        /*
-          Card 1 → Card 2
-        */
-
-        showNextCard(
-          card1.current,
-          card2.current,
-          0.9
-        );
-
-        tl.to({}, { duration: 0.75 });
-
-        /*
-          Card 2 → Card 3
-        */
-
-        showNextCard(
-          card2.current,
-          card3.current,
-          2.45
-        );
-
-        tl.to({}, { duration: 0.75 });
-
-        /*
-          Card 3 → Card 4
-        */
-
-        showNextCard(
-          card3.current,
-          card4.current,
-          4
-        );
-
-        tl.to({}, { duration: 0.75 });
-
-        /*
-          Card 4 → Card 5
-        */
-
-        showNextCard(
-          card4.current,
-          card5.current,
-          5.55
-        );
-
-        /*
-          Keep final card visible for a while.
-        */
-
-        tl.to({}, { duration: 1.5 });
-
-        const trigger = ScrollTrigger.create({
-          trigger: section,
-
-          start: "top top",
-
-          /*
-            Long enough for all five cards to be viewed
-            individually.
-          */
-
-          end: "+=520%",
-
-          scrub: 1.25,
-
-          animation: tl,
-
-          invalidateOnRefresh: true,
-
-          fastScrollEnd: false,
-
-          anticipatePin: 1,
+          clearProps: "all",
         });
 
         return () => {
-          trigger.kill();
-          tl.kill();
+          gsap.set(cardEls, {
+            clearProps: "all",
+          });
         };
       });
 
-      return () => {
-        mm.revert();
-      };
+      return () => mm.revert();
     }, sectionRef);
 
-    return () => {
-      ctx.revert();
-    };
+    return () => ctx.revert();
   }, []);
-
-  /* =========================================================
-     JSX
-  ========================================================= */
 
   return (
     <section
       ref={sectionRef}
       className="
-    relative
-    min-h-[180vh]
-    w-full
-    overflow-hidden
-    bg-[#0d0d0d]
-    text-white
-  "
+        relative
+        w-full
+        overflow-hidden
+        bg-[#0d0d0d]
+        text-white
+
+        min-h-screen
+
+        lg:min-h-[180vh]
+      "
     >
       {/* =====================================================
           DESKTOP LEFT CONTENT
@@ -1082,24 +728,30 @@ export default function BrandSection() {
             text-white/40
           "
         >
-          Our studio blends raw materiality with quiet luxury—creating interiors
-          that age like good wood, not fast fashion.
+          Our studio blends raw materiality with quiet luxury—
+          creating interiors that age like good wood, not fast
+          fashion.
         </p>
       </div>
 
       {/* =====================================================
-          MOBILE / TABLET TOP CONTENT
+          MOBILE / TABLET CONTENT
       ===================================================== */}
 
       <div
         className="
-          absolute
-          left-0
-          top-0
+          relative
           z-40
           w-full
           px-5
-          pt-7
+          pt-8
+
+          sm:px-8
+          sm:pt-10
+
+          md:px-10
+          md:pt-12
+
           lg:hidden
         "
       >
@@ -1108,6 +760,7 @@ export default function BrandSection() {
             font-[font2]
             text-[12px]
             font-semibold
+            leading-none
           "
         >
           (BRANDS)
@@ -1116,9 +769,9 @@ export default function BrandSection() {
         <h2
           className="
             mt-4
-            max-w-[310px]
+            max-w-[500px]
             font-[font2]
-            text-[clamp(28px,8vw,42px)]
+            text-[clamp(30px,7vw,56px)]
             font-black
             leading-[0.98]
             tracking-[-0.06em]
@@ -1129,43 +782,95 @@ export default function BrandSection() {
           Homeowners to
           <br />
           Global Brands —
+          <br />
+          The People and
+          <br />
+          Partners Who
+          <br />
+          Trust Us With
+          <br />
+          Their Spaces.
         </h2>
       </div>
 
       {/* =====================================================
-          CARDS
+          DESKTOP CARDS
       ===================================================== */}
 
-      <Card card={cards[0]} cardRef={card1} />
-
-      <Card card={cards[1]} cardRef={card2} />
-
-      <Card card={cards[2]} cardRef={card3} />
-
-      <Card card={cards[3]} cardRef={card4} />
-
-      <Card card={cards[4]} cardRef={card5} />
+      <div className="hidden lg:block">
+        <Card card={cards[0]} cardRef={card1} />
+        <Card card={cards[1]} cardRef={card2} />
+        <Card card={cards[2]} cardRef={card3} />
+        <Card card={cards[3]} cardRef={card4} />
+        <Card card={cards[4]} cardRef={card5} />
+      </div>
 
       {/* =====================================================
-          MOBILE BOTTOM TEXT
+          TABLET / MOBILE CARDS
+          NORMAL VERTICAL FLOW
       ===================================================== */}
 
       <div
         className="
-          absolute
-          left-5
-          right-5
-          top-[95vh]
+          relative
+          z-20
+          mt-12
+          flex
+          w-full
+          flex-col
+          gap-5
+          px-5
+
+          sm:mt-14
+          sm:px-8
+          sm:gap-6
+
+          md:mt-16
+          md:px-10
+
+          lg:hidden
+        "
+      >
+        <Card card={cards[0]} mobile />
+        <Card card={cards[1]} mobile />
+        <Card card={cards[2]} mobile />
+        <Card card={cards[3]} mobile />
+        <Card card={cards[4]} mobile />
+      </div>
+
+      {/* =====================================================
+          MOBILE / TABLET BOTTOM CONTENT
+      ===================================================== */}
+
+      <div
+        className="
+          relative
           z-40
+          mt-12
+          px-5
+          pb-14
+
+          sm:mt-14
+          sm:px-8
+          sm:pb-16
+
+          md:px-10
+          md:pb-20
+
           lg:hidden
         "
       >
         <p
           className="
+            max-w-[500px]
             font-[font2]
             text-[15px]
             leading-[1.35]
             text-white/45
+
+            sm:text-[17px]
+
+            md:text-[18px]
           "
         >
           We don’t decorate. We translate.
@@ -1178,7 +883,7 @@ export default function BrandSection() {
 
       <style>{`
         /* ===================================================
-           LARGE DESKTOP
+           DESKTOP
         =================================================== */
 
         .brand-card {
@@ -1193,12 +898,10 @@ export default function BrandSection() {
           height: auto;
 
           backface-visibility: hidden;
-
           -webkit-backface-visibility: hidden;
 
           perspective: 1000px;
         }
-
 
         /* ===================================================
            TABLET
@@ -1206,19 +909,10 @@ export default function BrandSection() {
 
         @media (min-width: 769px) and (max-width: 1024px) {
           .brand-card {
-            width: min(
-              360px,
-              46vw
-            );
-
+            width: min(360px, 70vw);
             aspect-ratio: 0.72;
           }
-
-          /*
-            Keep tablet content clear of the centered card.
-          */
         }
-
 
         /* ===================================================
            MOBILE
@@ -1226,15 +920,19 @@ export default function BrandSection() {
 
         @media (max-width: 768px) {
           .brand-card {
-            width: min(
-              320px,
-              78vw
-            );
-
+            width: min(360px, 88vw);
             aspect-ratio: 0.72;
+            height: auto;
+
+            position: relative;
+            left: auto;
+            top: auto;
+
+            transform: none !important;
+
+            opacity: 1 !important;
           }
         }
-
 
         /* ===================================================
            SMALL MOBILE
@@ -1242,15 +940,9 @@ export default function BrandSection() {
 
         @media (max-width: 480px) {
           .brand-card {
-            width: min(
-              285px,
-              72vw
-            );
-
-            aspect-ratio: 0.72;
+            width: min(340px, 88vw);
           }
         }
-
 
         /* ===================================================
            VERY SMALL DEVICES
@@ -1258,13 +950,12 @@ export default function BrandSection() {
 
         @media (max-width: 360px) {
           .brand-card {
-            width: 76vw;
+            width: 90vw;
           }
         }
 
-
         /* ===================================================
-           REDUCE MOTION
+           REDUCED MOTION
         =================================================== */
 
         @media (prefers-reduced-motion: reduce) {

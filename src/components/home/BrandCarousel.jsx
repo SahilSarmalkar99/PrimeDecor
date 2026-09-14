@@ -1,68 +1,73 @@
 import React from "react";
 
 const brands = [
-  {
-    name: "Energy",
-    logo: "◈",
-  },
-  {
-    name: "Shutterframe",
-    logo: "⬡",
-  },
-  {
-    name: "Renaissance",
-    logo: "ℝ",
-  },
-  {
-    name: "Screentime",
-    logo: "◐",
-  },
-  {
-    name: "Meta",
-    logo: "∞",
-  },
-  {
-    name: "Netflix",
-    logo: "N",
-  },
-  {
-    name: "Adobe",
-    logo: "A",
-  },
-  {
-    name: "Spotify",
-    logo: "●",
-  },
+  { name: "Energy", logo: "◈" },
+  { name: "Shutterframe", logo: "⬡" },
+  { name: "Renaissance", logo: "ℝ" },
+  { name: "Screentime", logo: "◐" },
+  { name: "Meta", logo: "∞" },
+  { name: "Netflix", logo: "N" },
+  { name: "Adobe", logo: "A" },
+  { name: "Spotify", logo: "●" },
 ];
+
+/* =========================================================
+   BRAND CARD
+========================================================= */
 
 const BrandCard = ({ brand }) => {
   return (
     <div
-      className="rounded-3xl
+      className="
+        flex
         shrink-0
-        w-[280px]
-        sm:w-[320px]
-        lg:w-[367px]
-        h-[220px]
-        sm:h-[240px]
-        lg:h-[265px]
+        items-center
+        justify-center
+        gap-2
+        rounded-2xl
         bg-[#1b1b1b]
-        flex items-center justify-center
-        gap-3
         text-[#777]
+
+        w-[75vw]
+        h-[190px]
+
+        sm:w-[300px]
+        sm:h-[220px]
+
+        md:w-[330px]
+        md:h-[240px]
+
+        lg:w-[367px]
+        lg:h-[265px]
+        lg:rounded-3xl
       "
     >
-      <span className="text-4xl sm:text-5xl font-bold opacity-70">
-        {brand.logo}
-      </span>
+      {/* LOGO */}
 
       <span
         className="
-          text-2xl
-          sm:text-3xl
-          lg:text-[32px]
+          text-3xl
+          font-bold
+          opacity-70
+
+          sm:text-4xl
+          md:text-5xl
+        "
+      >
+        {brand.logo}
+      </span>
+
+      {/* BRAND NAME */}
+
+      <span
+        className="
+          text-xl
           font-bold
           tracking-tight
+
+          sm:text-2xl
+          md:text-3xl
+          lg:text-[32px]
         "
       >
         {brand.name}
@@ -71,74 +76,73 @@ const BrandCard = ({ brand }) => {
   );
 };
 
+/* =========================================================
+   BRANDS CAROUSEL
+========================================================= */
+
 export default function BrandsCarousel() {
-  // Duplicate the array so the animation can loop seamlessly.
   const infiniteBrands = [...brands, ...brands];
 
   return (
-    <section className="w-full bg-[#0d0d0d] py-16  px-20 overflow-hidden">
-      <div className="relative w-full max-w-[1600px] mx-auto">
+    <section
+      className="
+        relative
+        w-full
+        overflow-hidden
+        bg-[#0d0d0d]
 
-        {/* =====================================================
-            MOVING CAROUSEL
-        ====================================================== */}
-        <div className="overflow-hidden">
-          <div className="brands-track flex gap-6 lg:gap-6 ">
-            {infiniteBrands.map((brand, index) => (
-              <BrandCard
-                key={`${brand.name}-${index}`}
-                brand={brand}
-              />
-            ))}
-          </div>
-        </div>
+        px-4
+        py-12
 
-        {/* =====================================================
-            FIXED ORANGE CARD
-            This sits ABOVE the moving cards.
-        ====================================================== */}
+        sm:px-6
+        sm:py-14
+
+        md:px-10
+        md:py-16
+
+        lg:px-20
+        lg:py-16
+      "
+    >
+      {/* =====================================================
+          MAIN CONTAINER
+          IMPORTANT: relative
+      ===================================================== */}
+
+      <div
+        className="
+          relative
+          mx-auto
+          w-full
+          max-w-[1600px]
+        "
+      >
+        {/* ===================================================
+            MOBILE / TABLET TITLE
+        =================================================== */}
+
         <div
           className="
-            absolute
-            z-20
-            left-0
-            top-0
-            rounded-3xl
-            w-[58%]
-            sm:w-[45%]
-            lg:w-[381px]
+            mb-8
+            block
 
-            h-[220px]
-            sm:h-[240px]
-            lg:h-[265px]
+            sm:mb-10
 
-            bg-[#e45a27]
-
-            px-7
-            sm:px-8
-            lg:px-[30px]
-
-            py-8
-            sm:py-9
-            lg:py-[38px]
-
-            flex
-            flex-col
-            justify-between
-
-            pointer-events-none
+            lg:hidden
           "
         >
           <h2
             className="
-              text-white
               font-bold
-              leading-[0.98]
-              tracking-[-0.04em]
+              leading-[0.9]
+              tracking-[-0.06em]
+              text-white
 
-              text-[42px]
-              sm:text-[48px]
-              lg:text-[50px]
+              text-[52px]
+
+              sm:text-[64px]
+
+              md:text-[72px]
             "
           >
             100+
@@ -148,23 +152,125 @@ export default function BrandsCarousel() {
 
           <p
             className="
-              text-white
+              mt-5
+              max-w-[320px]
               font-medium
-              leading-[1.35]
+              leading-[1.3]
+              text-white/60
 
-              text-[15px]
-              sm:text-[17px]
-              lg:text-[18px]
+              text-[14px]
 
-              max-w-[280px]
+              sm:text-[16px]
             "
           >
             From First-Time Homeowners to
-            <br className="hidden sm:block" />
-            Global Brand.
+            <br />
+            Global Brands.
           </p>
         </div>
 
+        {/* ===================================================
+            CAROUSEL AREA
+        =================================================== */}
+
+        <div
+          className="
+            relative
+            w-full
+            overflow-hidden
+          "
+        >
+          {/* =================================================
+              MOVING TRACK
+          ================================================= */}
+
+          <div
+            className="
+              brands-track
+              flex
+              w-max
+              gap-4
+
+              sm:gap-5
+
+              lg:gap-6
+            "
+          >
+            {infiniteBrands.map((brand, index) => (
+              <BrandCard
+                key={`${brand.name}-${index}`}
+                brand={brand}
+              />
+            ))}
+          </div>
+
+          {/* =================================================
+              DESKTOP ORANGE CARD
+
+              IMPORTANT:
+              It is now relative to CAROUSEL AREA,
+              not the Hero section.
+          ================================================= */}
+
+          <div
+            className="
+              pointer-events-none
+              absolute
+
+              left-0
+              top-0
+
+              z-20
+
+              hidden
+
+              lg:flex
+              lg:w-[381px]
+              lg:h-[265px]
+
+              flex-col
+              justify-between
+
+              rounded-3xl
+              bg-[#e45a27]
+
+              px-[30px]
+              py-[38px]
+            "
+          >
+            {/* TITLE */}
+
+            <h2
+              className="
+                text-[50px]
+                font-bold
+                leading-[0.95]
+                tracking-[-0.05em]
+                text-white
+              "
+            >
+              100+
+              <br />
+              Brands
+            </h2>
+
+            {/* DESCRIPTION */}
+
+            <p
+              className="
+                max-w-[280px]
+                text-[18px]
+                font-medium
+                leading-[1.3]
+                text-white
+              "
+            >
+              From First-Time Homeowners to
+              <br />
+              Global Brand.
+            </p>
+          </div>
+        </div>
       </div>
     </section>
   );
